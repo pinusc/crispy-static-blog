@@ -2,8 +2,9 @@
 BUILDDIR=output
 CSSDIR=$(BUILDDIR)/css
 POSTS=$(patsubst %.md,$(BUILDDIR)/%.html,$(wildcard posts/*.md))
+PAGES=$(patsubst %,$(BUILDDIR)/%,$(wildcard *.html))
 
-all: $(BUILDDIR) $(BUILDDIR)/index.html $(POSTS) $(CSSDIR)/style.css
+all: $(BUILDDIR) $(PAGES) $(POSTS) $(CSSDIR)/style.css
 
 clean:
 	-rm -r $(BUILDDIR)
@@ -18,8 +19,8 @@ $(BUILDDIR):
 
 # $(BUILDDIR)/posts/%.html: $(POSTSRCDIR)/%.md
 # 	python detemplater.py
-$(BUILDDIR)/%.html: %.html templates/* templates/**/*
+$(BUILDDIR)/%.html: %.html templates/* templates/**/* detemplater.py $(POSTS)
 	python detemplater.py $< > $@
 
-$(BUILDDIR)/%.html: %.md templates/* templates/**/*
+$(BUILDDIR)/%.html: %.md templates/* templates/**/* detemplater.py
 	python detemplater.py $< > $@

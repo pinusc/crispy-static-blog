@@ -1,6 +1,7 @@
 ---
 title: post-1
 template: post
+category: baz
 ---
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eget libero tellus. Proin mollis purus vel eros condimentum ullamcorper. Quisque sed lacus elementum, placerat est tempor, euismod leo. Vestibulum placerat ipsum in ligula tristique, non fringilla ipsum sollicitudin. Morbi dignissim, sem nec pretium suscipit, velit mauris lacinia lacus, vel gravida risus ante vitae nunc. Nullam vestibulum tortor vitae varius rhoncus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam erat volutpat. Fusce non lorem quam. Nullam ultrices nisl id placerat interdum. Etiam egestas urna nulla, eu vehicula eros convallis et. Suspendisse potenti.
 

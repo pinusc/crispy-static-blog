@@ -1,12 +1,14 @@
 {% extends 'default.html' %}
+
 {% block content %}
-<h1>Recent posts:</h1>
+<h1>All the posts:</h1>
 <ol>
-  {% for post in posts()[:5] %}
+  {% for post in posts() %}
   <li> 
     {% if post.meta('date') %} 
       {{ post.meta('date') }} 
     {% endif %}
+    <b>{{ post.meta('category') }}</b>
     <a href="/{{ post.get_compiled_path() }}">{{ post.title() }}</a> 
   </li>
   {% endfor %}

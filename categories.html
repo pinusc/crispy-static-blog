@@ -1,0 +1,24 @@
+{% extends 'default.html' %}
+
+{% block content %}
+  {% set ns = namespace(categories = {}, categories_list = []) %}
+  {% for post in posts() %}
+    {% set pcat = post.meta('category') %}
+    {% if pcat not in categories_list %}
+      {% set ns.categories_list = ns.categories_list + [pcat] %}
+      {% set ns.categories = macros.add_post_in_dict(ns.categories,pcat,post) %}
+    {% endif %}
+  {% endfor %}
+  <ul>
+    {% for category in ns.categories %}
+      <li>
+        {{ category }}
+        <ul>
+          {% for post in ns.categories[category] %}
+            <li><a href="/{{ post.get_compiled_path() }}">{{ post.title() }}</a></li> 
+          {% endfor %}
+        </ul>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}
