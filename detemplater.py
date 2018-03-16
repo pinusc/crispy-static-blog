@@ -10,14 +10,58 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape, Markup
 import markdown
 from config import config
 
-def get_compiled_path(file_name, new_ext='.html'):
-    fname, _ = os.path.splitext(file_name)
-    return fname + new_ext
+class Post:
+    """
+    Abstracts the concept of Post. Efficiency-wise it is terrible and needs
+    lazy-loading.
+    """
+    def __init__(self, path):
+        self.path = path
 
+    def _rawtext(self):
+        with open(self.path, 'r') as f:
+            rt = f.read()
+            self._rawtext = lambda: rt
+            return rt
+
+    def _md(self):
+        md = markdown.Markdown(extensions=['markdown.extensions.meta'])
+        self._md = lambda: md
+        return md
+
+    def content(self):
+        content = Markup(self._md().convert(self._rawtext()))
+        self.content = lambda: content
+        return content
+
+    def title(self):
+        return self.meta('title')
+
+    def template(self):
+        if self.meta('template'):
+            return self.meta('template')+'.html'
+
+    def meta(self, key):
+        self.content() # in order for _md().Meta to exist
+        return self._md().Meta[key][0] if key in self._md().Meta else False
+
+    def get_compiled_path(self, new_ext='.html'):
+        fname, _ = os.path.splitext(self.path)
+        return fname + new_ext
+
+    def __str__(self):
+        return self.path
+    def __repr__(self):
+        return self.__str__()
+
+def posts():
+    lposts = [Post(i) for i in glob.glob("posts/*")]
+    posts = lambda: lposts
+    return lposts
 
 def get_envar():
     def get_posts():
-        return [get_compiled_path(i) for i in glob.glob("posts/*")]
+        return [i.get_compiled_path() for i in posts()]
     def get_post_name(path):
         fname, _ = os.path.splitext(path.split('/')[-1])
         return fname
@@ -55,7 +99,7 @@ def main():
         template = env.from_string(text)
     else:
         content = Markup(text)
-    print(template.render(content=content,meta=meta,**config,**envar))
+    print(template.render(content=content,meta=meta,**config,posts=posts))
     # print('title meta-data is retrieved from the content:', file=sys.stderr)
 
 if __name__ == "__main__":
