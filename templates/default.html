@@ -1,0 +1,15 @@
+<html>
+  {% include "includes/head.html" %}
+  <body>
+    {% include "includes/header.html" %}
+
+    {# {% extends meta('template') %} #}
+    {# {% if meta('template') %}
+      {% extends meta('template')+'.html' %}
+    {% else %}
+      {% block content %}{% endblock %}
+      {% endif %}#}
+    {% block content %}{% endblock %}
+
+  </body>
+</html>

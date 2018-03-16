@@ -1,0 +1,9 @@
+{% extends 'default.html' %}
+{% block content %}
+<h1>Posts:</h1>
+<ol>
+  {% for post in get_posts() %}
+  <li><a href="/{{ post }}">{{ get_post_name(post) }}</a></li>
+  {% endfor %}
+</ol>
+{% endblock %}
