@@ -15,12 +15,12 @@ The style files are in `sass/`, they all get compiled in one big css file.
 Put your posts in `posts`, prefereably following the format: `yyyy-mm-dd-title-lorem-ipsum.md`. 
 The markdown flavor is plain markdown plus metadata: add a block at the beginning of each file with content as follows:
 
-  ---
-  title: Lorem ipsum
-  template: post
-  date: 2018-03-17
-  ---
-  And here goes the text of the post...
+    ---
+    title: Lorem ipsum
+    template: post
+    date: 2018-03-17
+    ---
+    And here goes the text of the post...
 
 Finally, run `make` to make the project! The site will be built in the `output` folder, which can be delete by issuing `make clean`.
 
